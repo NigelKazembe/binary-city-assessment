@@ -39,6 +39,9 @@ public partial class BcityAssessmentContext : DbContext
             entity.Property(e => e.ClientCode)
                 .HasMaxLength(6)
                 .HasColumnName("client_code");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName("name_");
 
             entity.HasMany(d => d.Contacts).WithMany(p => p.Clients)
                 .UsingEntity<Dictionary<string, object>>(

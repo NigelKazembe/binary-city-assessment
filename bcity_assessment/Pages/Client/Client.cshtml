@@ -4,31 +4,35 @@
     ViewData["Title"] = "Clients page";
 }
 
-<div>
-    @if (@Model.Clients.Count != 0)
-    {
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Client Code</th>
-            </tr>
-            </thead>
-            @foreach (var item in @Model.Clients)
-            {
-                <p>@item.ClientCode</p>
-
+<div class="container" style="display: flex; justify-content: space-around">
+    <div>
+        @if (@Model.Clients.Count != 0)
+        {
+            <table class="table table-hover">
+                <thead class="table-dark">
                 <tr>
-                    <td>@item.</td>
-                    <td>@item.ClientCode</td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Client Code</th>
+                    <th scope="col">Number of Contacts</th>
                 </tr>
-            }
-        </table>
-    }
-    else
-    {
-        <p>No Clients to Show</p>
-    }
-
-    <p>Demo Content</p>
+                </thead>
+                @foreach (var item in @Model.Clients)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.ClientCode</td>
+                        <td style="text-align: center;">@item.Contacts.Count</td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No Client(s) found</p>
+        }
+    </div>
+    
+    <div>
+        <button class="btn btn-light">Add +</button>
+    </div>
 </div>
