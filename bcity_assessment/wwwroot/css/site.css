@@ -20,3 +20,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.tab {
+  display: none;
+}
+.tab-buttons {
+  display: flex;
+  margin-bottom: 10px;
+}
+.tab-buttons button {
+  flex: 1;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+.tab-buttons button.active {
+  background-color: #ddd;
+}
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 15px;
+  background-color: #fff;
+}

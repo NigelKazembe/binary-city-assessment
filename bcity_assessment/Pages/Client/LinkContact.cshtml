@@ -1,0 +1,107 @@
+@page "{clientId?}"
+@model bcity_assessment.Pages.Client.LinkContact
+
+@{
+    ViewData["Title"] = "Link Contact page";
+}
+
+<h1>Link Contacts to Client</h1>
+
+<div class="tab-buttons">
+    <button class="tab-link active" onclick="openTab(event, 'general')">Personal Info</button>
+    <button class="tab-link" onclick="openTab(event, 'contact')">Contact Info</button>
+    <button class="tab-link" onclick="openTab(event, 'all-contacts')">All Contact(s)</button>
+</div>
+
+<form method="post">
+
+    <div id="general" class="tab tab-content" style="display: block;">
+        <h2>General</h2>
+        <label asp-for="Client.Name"></label>
+        <input disabled class="form-control" asp-for="Client.ClientCode"/>
+        <span asp-validation-for="Client"></span>
+    </div>
+
+    <div id="contact" class="tab tab-content">
+        <h2>Linked Contact(s)</h2>
+        @if (@Model.Client.Contacts.Count == 0)
+        {
+            <p>No Contact(s) found</p>
+        }
+        else
+        {
+            <table class="table table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+           
+                @foreach (var item in @Model.Client.Contacts)
+                {
+                    <tr>
+                        <td>@item.Surname @item.Name</td>
+                        <td>@item.Email</td>
+                        <td style="text-align: center;">
+                            Linked
+                        </td>
+                    </tr>
+                }
+            </table>
+           
+        }
+    </div>
+
+    <div id="all-contacts" class="tab tab-content">
+        <h2>All Contact(s)</h2>
+        @if (@Model.Contacts.Count == 0)
+        {
+        <p>No Contact(s) found</p>
+        }
+        else
+        {
+        <table class="table table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email Address</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+
+            @foreach (var item in @Model.Contacts)
+            {
+            <tr>
+                <td>@item.Surname @item.Name</td>
+                <td>@item.Email</td>
+                <td style="text-align: center;">
+                    <input hidden="hidden" name="ContactId" value="@item.Id" asp-for="ContactId"/>
+                    <button asp-page="/Client/LinkContact" class="btn" type="submit">Link</button>
+                </td>
+            </tr>
+            }
+        </table>
+
+        }
+    </div>
+    <!---
+<div>
+    <button class="btn btn-check" type="submit">Submit</button>
+</div>
+--->
+</form>
+
+<script>
+    function openTab(event, tabId) {
+        const tabs = document.querySelectorAll('.tab');
+        const buttons = document.querySelectorAll('.tab-link');
+
+        tabs.forEach(tab => tab.style.display = 'none');
+        buttons.forEach(button => button.classList.remove('active'));
+
+        document.getElementById(tabId).style.display = 'block';
+        event.currentTarget.classList.add('active');
+    }
+</script>

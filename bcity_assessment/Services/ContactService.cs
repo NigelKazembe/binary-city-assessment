@@ -11,6 +11,7 @@ public class ContactService
         this._context = context;
     }
 
+    //Implement code to check for duplicate entries before adding since you aren't using a HashSet
     public void Create(Contact contact)
     {
         this._context.Add(contact);

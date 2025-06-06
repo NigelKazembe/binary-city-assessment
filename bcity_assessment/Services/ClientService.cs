@@ -11,6 +11,7 @@ public class ClientService
         this._context = context;
     }
 
+    //Implement code to check for duplicate entries before adding since you aren't using a HashSet
     public void AddClient(Client client)
     {
         _context.Clients.Add(client);
@@ -37,10 +38,11 @@ public class ClientService
             contact_ = _context.Contacts.FirstOrDefault(c => c.Id == contactId);
             if (contact_ != null)
             {
-                contact_.Clients.Add(client);
+                //contact_.Clients.Add(client);
                 client.Contacts.Add(contact_);
+                _context.SaveChanges();
             }
         }
-        _context.SaveChanges();
+        
     }
 }

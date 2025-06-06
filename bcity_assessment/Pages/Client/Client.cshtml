@@ -22,7 +22,7 @@
                         <td>@item.Name</td>
                         <td>@item.ClientCode</td>
                         <td style="text-align: center;">
-                            <a asp-page="/Client/LinkClient">@item.Contacts.Count</a>
+                            <a href="/Client/LinkContact/@item.Id">@item.Contacts.Count</a>
                         </td>
                     </tr>
                 }
