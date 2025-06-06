@@ -21,7 +21,9 @@
                     <tr>
                         <td>@item.Name</td>
                         <td>@item.ClientCode</td>
-                        <td style="text-align: center;">@item.Contacts.Count</td>
+                        <td style="text-align: center;">
+                            <a asp-page="/Client/LinkClient">@item.Contacts.Count</a>
+                        </td>
                     </tr>
                 }
             </table>
@@ -33,6 +35,6 @@
     </div>
     
     <div>
-        <button class="btn btn-light">Add +</button>
+        <a class="btn btn-light" asp-page="/Client/CreateClient" >Add +</a>
     </div>
 </div>

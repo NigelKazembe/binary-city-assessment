@@ -1,0 +1,29 @@
+@page
+@model bcity_assessment.Pages.Contact.CreateContact
+
+@{
+ViewData["Title"] = "Create Contact page";
+}
+
+
+<div class="container" style="display: flex; justify-content: space-around">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="ContactModel.FirstName"></label>
+            <input class="form-control" asp-for="ContactModel.FirstName" />
+            <span asp-validation-for="ContactModel.FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactModel.LastName"></label>
+            <input class="form-control" asp-for="ContactModel.LastName" />
+            <span asp-validation-for="ContactModel.LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactModel.Email"></label>
+            <input class="form-control" asp-for="ContactModel.Email" />
+            <span asp-validation-for="ContactModel.Email"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>    </form>
+</div>

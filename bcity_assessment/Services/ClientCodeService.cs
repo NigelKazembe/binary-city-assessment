@@ -1,33 +1,53 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Update;
+
 namespace bcity_assessment.Services;
 
 public class ClientCodeService
 {
     private readonly BcityAssessmentContext _context;
-    public ClientCodeService(BcityAssessmentContext context)
+    private readonly ILogger<ClientCodeService> _logger;
+    private Random _random = new Random();
+    private string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public ClientCodeService(BcityAssessmentContext context, ILogger<ClientCodeService> logger)
     {
         this._context = context;
+        this._logger = logger;
     }
 
     public string GenerateClientCode(string clientName)
     {
-
         var abb = AbbreviateClientCode(clientName);
         
-        for (var i = 0; i < 3; i++)
+        var like = _context.Clients.Where(c => EF.Functions
+            .Like(c.ClientCode, "%"+abb+"%"))
+            .ToList();
+        
+        if (like.Count == 0)
         {
-            abb += i.ToString();
+            abb += "001";
         }
+        else
+        {
+            var count = like.Count;
+            count++;
+            var temp = ""+count;
 
+            while (temp.Length < 3)
+            {
+                temp = "0" + temp;
+            }
+
+            abb += temp;//count.ToString();
+        }
         return abb;
     }
 
     //Code Below can be improved, should also be modified to utilize DB for numeric part
     /*
-     * you could potentially do it this way, where you implement code to search if there is any client code that
-     * is like/matches the abbreviation, and if so if it is less than 3, then access the last used sequence value to
-     * get the new one
-     * if equal to 3 and it matches an abb in the db, then if it does, retreive it then access the number at the end and
-     * increment it then store the clientcode as a new one for this new client
+     * The implementation code below is quite ugly no lie, and can be improved by extracting some of the code to new
+     * methods
      */
     private string AbbreviateClientCode(string clientName)
     {
@@ -38,11 +58,26 @@ public class ClientCodeService
         if (clientName.Contains(' '))
         {
             client = clientName.Split(' ').ToList();
-            while (n < 3)
+            
+            while (n < client.Count && n < 3)
             {
                 abb += client[n][0].ToString().ToUpper();
                 n++;
+                //return abb;
+            } 
+            
+            if (client.Count < 3)
+            {
+                var c = client.Count;
+                //abb = clientName.ToUpper();
+                while (c < 3)
+                {
+                    var randomNumber = _random.Next(_chars.Length);
+                    abb += _chars[randomNumber].ToString();
+                    c++;
+                }
             }
+
         }
         else
         {
@@ -58,7 +93,10 @@ public class ClientCodeService
 
                 while (c < 3)
                 {
-                    abb += "A";
+                    var randomNumber = _random.Next(_chars.Length);
+                    abb += _chars[randomNumber].ToString();
+                    //abb += "A";
+                    c++;
                 }
             }
         }

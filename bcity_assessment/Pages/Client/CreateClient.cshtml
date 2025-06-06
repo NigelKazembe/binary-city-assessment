@@ -1,0 +1,20 @@
+@page
+@model bcity_assessment.Pages.Client.CreateClient
+
+@{
+    ViewData["Title"] = "Create Client page";
+}
+
+<div class="container" style="display: flex; justify-content: space-around">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="ClientModel.FirstName"></label>
+            <input class="form-control" asp-for="ClientModel.FirstName" />
+            <span asp-validation-for="ClientModel.FirstName"></span>
+        </div>
+       
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
