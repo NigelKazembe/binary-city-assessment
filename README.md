@@ -1,7 +1,7 @@
-#Binary City Assessment
+# Binary City Assessment
 
-##Initialization
+## Initialization
 Created a separate DB in MySQL and reverse engineered it into the project using EF Core
 
-##Technologies Used
+## Technologies Used
 The project was created using Ef Core and ASP .NET Core
